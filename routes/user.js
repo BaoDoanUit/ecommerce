@@ -2,10 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const {requireSignin} = require('../controllers/auth')
-
-const {
-    userById
-} = require("../controllers/user");
 const { userById } = require("../controllers/user");
 //router
 
