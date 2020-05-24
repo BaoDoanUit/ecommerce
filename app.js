@@ -34,7 +34,6 @@ app.use('/api',catgoryRoutes);
 app.use('/api',productRoutes);
 
 
-
 const port = process.env.PORT || 8000
 
 app.listen(port, () => {
