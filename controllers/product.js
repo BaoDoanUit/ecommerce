@@ -21,19 +21,19 @@ exports.read = (req, res) => {
   return res.json(req.product);
 };
 
-exports.remove = (req, res) =>{
+exports.remove = (req, res) => {
   let product = req.product;
   product.remove((err, deletedProduct) => {
-    if(err){
+    if (err) {
       return res.status(400).json({
-        error: errorHandler(err)
+        error: errorHandler(err),
       });
     }
     res.json({
-      message: "Product Deleted"
-    })
-  })
-}
+      message: "Product Deleted",
+    });
+  });
+};
 
 exports.create = (req, res) => {
   let form = new formidable.IncomingForm();
@@ -119,7 +119,7 @@ exports.update = (req, res) => {
     }
 
     let product = req.product;
-    product = _.extend(product, fields)
+    product = _.extend(product, fields);
 
     // 1kb = 1000
     // 1mb = 1000000
@@ -144,4 +144,50 @@ exports.update = (req, res) => {
       res.json(result);
     });
   });
+};
+
+/**
+ * sell / arrival
+ * by sell = /products?sortBy=sold&order=desc&limit=4
+ * by arrival = /products?sortBy=createdAt&order=des&limit=4
+ * if no params are sent, then all products are returned
+ */
+exports.list = (req, res) => {
+  let order = req.query.order ? req.query.order : "asc";
+  let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
+  let limit = req.query.limit ? parseInt(req.query.limit) : 6;
+
+  Product.find()
+    .select("-photo")
+    .populate("category")
+    .sort([[sortBy, order]])
+    .limit(limit)
+    .exec((err, products) => {
+      if (err) {
+        res.status(400).json({
+          error: "Products not found",
+        });
+      }
+      res.send(products);
+    });
+};
+
+/**
+ * it will find the products based on the req product category
+ * other products that has the same category, will be returned
+ */
+exports.listRelated = (req, res) => {
+  let limit = req.query.limit ? parseInt(req.query.limit) : 6;
+  Product.find({ _id: { $ne: req.product }, category: req.product.category })
+    .select('-photo')
+    .limit(limit)
+    .populate("category", "_id name")
+    .exec((err, products) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Products not found",
+        });
+      }
+      res.json(products);
+    });
 };
