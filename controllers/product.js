@@ -21,6 +21,20 @@ exports.read = (req, res) => {
   return res.json(req.product);
 };
 
+exports.remove = (req, res) =>{
+  let product = req.product;
+  product.remove((err, deletedProduct) => {
+    if(err){
+      return res.status(400).json({
+        error: errorHandler(err)
+      });
+    }
+    res.json({
+      message: "Product Deleted"
+    })
+  })
+}
+
 exports.create = (req, res) => {
   let form = new formidable.IncomingForm();
 
@@ -50,6 +64,62 @@ exports.create = (req, res) => {
     }
 
     let product = new Product(fields);
+
+    // 1kb = 1000
+    // 1mb = 1000000
+
+    if (files.photo) {
+      console.log("FILE PHOTO: ", files.photo);
+      if (files.photo.size > 1000000) {
+        return res.status(400).json({
+          error: "Image should be less than 1mb in size",
+        });
+      }
+      product.photo.data = fs.readFileSync(files.photo.path);
+      product.photo.contentType = files.photo.type;
+    }
+
+    product.save((err, result) => {
+      if (err) {
+        return res.status(400).json({
+          error: errorHandler(err),
+        });
+      }
+      res.json(result);
+    });
+  });
+};
+
+exports.update = (req, res) => {
+  let form = new formidable.IncomingForm();
+
+  form.keepExtensions = true;
+
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      return res.status(400).json({
+        err: "Image could not be uploaded",
+      });
+    }
+
+    // check for all fields
+    const { name, description, price, category, quantity, shipping } = fields;
+
+    if (
+      !name ||
+      !description ||
+      !price ||
+      !category ||
+      !quantity ||
+      !shipping
+    ) {
+      return res.status(400).json({
+        error: "All fields are required",
+      });
+    }
+
+    let product = req.product;
+    product = _.extend(product, fields)
 
     // 1kb = 1000
     // 1mb = 1000000
