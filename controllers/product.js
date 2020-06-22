@@ -191,3 +191,15 @@ exports.listRelated = (req, res) => {
       res.json(products);
     });
 };
+
+exports.listCategories = (req, res) => {
+  let limit = req.query.limit ? parseInt(req.query.limit) : 6; 
+  let category = req.query.category ? req.query.category : null;
+  Product.distinct("category", {}, (err, products)=>{
+    if(err){
+      return res.status(400).json({
+        error: "Categories not found"
+      })
+    }
+  })
+}
