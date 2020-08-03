@@ -13,7 +13,7 @@ exports.signup = (req, res) => {
   user.save((err, user) => {
     if (err) {
       return res.status(400).json({
-        err: errorHandler(err),
+        error: errorHandler(err),
       });
     }
     user.salt = undefined;
@@ -30,14 +30,14 @@ exports.signin = (req, res) => {
   User.findOne({ email }, (err, user) => {
     if (err || !user) {
       return res.status(400).json({
-        err: "User with that email does not exists. Please signup",
+        error: "User with that email does not exists. Please signup",
       });
     }
     // if user is found make sure email and password match
 
     // create authenticate method in user model
     if (!user.authenticate(password)) {
-      return res.status(401).json({ err: "Email and password doesnt exist" });
+      return res.status(401).json({ error: "Email and password doesnt exist" });
     }
     // generate a signed token with user id and secret
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
