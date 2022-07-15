@@ -12,18 +12,20 @@ const userRoutes = require('./routes/user')
 const catgoryRoutes = require('./routes/category')
 const productRoutes = require('./routes/product')
 const orderRoutes = require('./routes/order')
+const demoRoutes = require('./routes/demo')
 
 //app
 const app = express();
 
 //db
-mongoose.connect(process.env.DATABASE,{
-    useNewUrlParser: true,
-    useCreateIndex: true
-}).then(()=>console.log('DB Connected'))
 
-//middleware 
-app.use(morgan('dev'));
+// mongoose.connect(process.env.DATABASE,{
+//     useNewUrlParser: true,
+//     useCreateIndex: true
+// }).then(()=>console.log('DB Connected'))
+
+//middleware
+// app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(expressValidator());
@@ -37,6 +39,7 @@ app.use('/api',userRoutes);
 app.use('/api',catgoryRoutes);
 app.use('/api',productRoutes);
 app.use('/api',orderRoutes);
+app.use('/api',demoRoutes);
 
 
 const port = process.env.PORT || 8000
