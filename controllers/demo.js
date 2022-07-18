@@ -3,7 +3,8 @@ const excel = require("node-xlsx")
 const fs = require("fs")
 const path = require("path")
 const res = require('express/lib/response')
-const AppDAO = require('../models/dao')
+const AppDAO = require('./DAO.js')
+
 const data = [
     {
         "id": 1
