@@ -34,6 +34,12 @@ exports.readSqlite = async (req, res) => {
     return res.json(data);
 }
 
+exports.createdTable = async (req, res) => {
+    await createTable();
+    const data = await readData();
+    return res.json(data);
+}
+
 exports.insertNewLog = async (req, res) => {
     const log = req.body.log || 'new test'
     console.log(log);
