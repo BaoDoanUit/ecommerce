@@ -16,7 +16,7 @@ router.post("/signin", signin);
 router.get("/signout", signout);
 
 router.get("/hello", (req, res) => {
-  res.send("hello there");
+  res.status(200).send("hello there");
 });
 
 router.get("/", requireSignin, SayHi);

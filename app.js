@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const mongoose = require('mongoose');
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -19,13 +20,14 @@ const app = express();
 
 //db
 
-// mongoose.connect(process.env.DATABASE,{
-//     useNewUrlParser: true,
-//     useCreateIndex: true
-// }).then(()=>console.log('DB Connected'))
+mongoose.connect(process.env.DATABASE, {
+    useNewUrlParser: true,
+    useCreateIndex: true
+}).then(() => console.log('DB Connected'))
 
 //middleware
-// app.use(morgan('dev'));
+app.use(morgan('dev'));
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(expressValidator());
@@ -34,12 +36,12 @@ app.use(cors());
 
 //routes middleware
 
-app.use('/api',authRoutes);
-app.use('/api',userRoutes);
-app.use('/api',catgoryRoutes);
-app.use('/api',productRoutes);
-app.use('/api',orderRoutes);
-app.use('/api',demoRoutes);
+app.use('/api', authRoutes);
+app.use('/api', userRoutes);
+app.use('/api', catgoryRoutes);
+app.use('/api', productRoutes);
+app.use('/api', orderRoutes);
+app.use('/api', demoRoutes);
 
 
 const port = process.env.PORT || 8000
