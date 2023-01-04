@@ -18,14 +18,13 @@ const demoRoutes = require('./routes/demo')
 const app = express();
 
 //db
-
 // mongoose.connect(process.env.DATABASE,{
 //     useNewUrlParser: true,
 //     useCreateIndex: true
 // }).then(()=>console.log('DB Connected'))
 
 //middleware
-// app.use(morgan('dev'));
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(expressValidator());
