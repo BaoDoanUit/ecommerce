@@ -17,12 +17,12 @@ const orderRoutes = require('./routes/order')
 const app = express();
 
 //db
-mongoose.connect(process.env.DATABASE,{
-    useNewUrlParser: true,
-    useCreateIndex: true
-}).then(()=>console.log('DB Connected'))
+// mongoose.connect(process.env.DATABASE,{
+//     useNewUrlParser: true,
+//     useCreateIndex: true
+// }).then(()=>console.log('DB Connected'))
 
-//middleware 
+//middleware
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
