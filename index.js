@@ -16,8 +16,10 @@ const orderRoutes = require('./routes/order')
 //app
 const app = express();
 
+const dbConnection = "mongodb+srv://baodoan:Qn0982190003@cluster0.crgrhba.mongodb.net/?retryWrites=true&w=majority"
+
 //db
-mongoose.connect(process.env.DATABASE,{
+mongoose.connect(dbConnection,{
     useNewUrlParser: true,
     useCreateIndex: true
 }).then(()=>console.log('DB Connected'))
@@ -38,8 +40,7 @@ app.use('/api',catgoryRoutes);
 app.use('/api',productRoutes);
 app.use('/api',orderRoutes);
 
-
-const port = process.env.PORT || 8000
+const port = 8000
 
 app.listen(port, () => {
     console.log(`Server running on port: ${port} `)
