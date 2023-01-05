@@ -22,11 +22,8 @@ const dbConnection = "mongodb+srv://baodoan:Qn0982190003@cluster0.crgrhba.mongod
 mongoose.connect(dbConnection, {
     useNewUrlParser: true,
     useCreateIndex: true
-}).then(() => console.log('DB Connected'))
-    .catch((error) => {
-        assert.isNotOk(error, 'Promise error');
-        done();
-    });
+}).then(() => console.log('DB Connected'));
+
 
 //middleware
 app.use(morgan('dev'));
