@@ -19,10 +19,14 @@ const app = express();
 const dbConnection = "mongodb+srv://baodoan:Qn0982190003@cluster0.crgrhba.mongodb.net/?retryWrites=true&w=majority"
 
 //db
-mongoose.connect(dbConnection,{
+mongoose.connect(dbConnection, {
     useNewUrlParser: true,
     useCreateIndex: true
-}).then(()=>console.log('DB Connected'))
+}).then(() => console.log('DB Connected'))
+    .catch((error) => {
+        assert.isNotOk(error, 'Promise error');
+        done();
+    });
 
 //middleware
 app.use(morgan('dev'));
@@ -34,11 +38,11 @@ app.use(cors());
 
 //routes middleware
 
-app.use('/api',authRoutes);
-app.use('/api',userRoutes);
-app.use('/api',catgoryRoutes);
-app.use('/api',productRoutes);
-app.use('/api',orderRoutes);
+app.use('/api', authRoutes);
+app.use('/api', userRoutes);
+app.use('/api', catgoryRoutes);
+app.use('/api', productRoutes);
+app.use('/api', orderRoutes);
 
 const port = 8000
 
