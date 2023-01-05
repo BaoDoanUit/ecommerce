@@ -37,7 +37,6 @@ exports.readSqlite = async (req, res) => {
 
 exports.createdTable = async (req, res) => {
     await createTable();
-    const data = await readData();
     return res.json(data);
 }
 
