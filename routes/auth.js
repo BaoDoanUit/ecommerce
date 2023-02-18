@@ -14,7 +14,6 @@ const { userSignupValidator } = require("../validator/index");
 router.post("/signup", userSignupValidator, signup);
 router.post("/signin", signin);
 router.get("/signout", signout);
-
 router.get("/hello", (req, res) => {
   res.send("hello there");
 });
