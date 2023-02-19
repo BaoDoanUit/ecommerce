@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "mode index.js --unhandled-rejections=strict"
+    "start": "node index.js --unhandled-rejections=strict"
   },
   "keywords": [],
   "author": "",
