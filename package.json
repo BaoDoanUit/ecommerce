@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js --unhandled-rejections=strict"
+    "start": "mode index.js --unhandled-rejections=strict"
   },
   "keywords": [],
   "author": "",
