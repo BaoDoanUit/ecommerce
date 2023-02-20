@@ -9,10 +9,10 @@ exports.authenticate = (user, res) => {
       .then(response => {
         console.log(response);
         const token = response.data
-        return res.status(200).json(token);
+        return res.status(200).data(token);
       })
       .catch(error => {
         console.log(error);
-        return res.status(400).json(error);
+        return res.status(400).data(error);
       });
 }
